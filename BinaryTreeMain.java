@@ -34,6 +34,44 @@ class BST{
         System.out.print(root.data + "");
         inorder(root.right);
     }
+
+    void delete(int val){
+        deleteNode(root, val);
+    }
+
+    Node deleteNode(Node root, int key){
+        if(root == null){
+            return;
+        }
+        if(root.data<key){
+            root.data = deleteNode(root.left, key);
+        }
+        else if(root.data<key){
+            return deleteNode(root.right, key);
+        }
+        else if(root.data == key){
+            if(root.right == null && root.left == null){
+                return null;
+            }
+            else if(root.right == null){
+                return root.left;
+            }
+            else if(root.left == null){
+                return root.right;
+            }
+            Node successor = findMin(root.right,data);
+            root.data = successor.data;
+            root.right = deleteNode(root.left, successor.data);
+        }
+        return root;
+    }
+
+    Node findMin(Node root, int data){
+        while(root.left !=null){
+            root = root.left;
+        }
+        return root;
+    }
 }
 class Main {
     public static void main(String[] args) {
