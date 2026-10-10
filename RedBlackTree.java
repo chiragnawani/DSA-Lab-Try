@@ -14,11 +14,11 @@ class RedBlackTree{
     Node root;
     
     Node temp;
-    insert(int data){
-        insertNode(root,temp,val);
+    void insert(int data){
+        root = insertNode(root,temp,data);
         root.color = "B";
     }
-    insertNode(Node root, Node temp, int val){ 
+    Node insertNode(Node root, Node temp, int val){
         if(root == null){
             root = new Node(val);root.parent = temp;
         }else if(val<root.data){
@@ -28,8 +28,13 @@ class RedBlackTree{
             temp = root;
             root.right = insertNode(root.right,temp,val);
         }
+        fixInsert(root);
+        return root;
+    }
 
 
+
+    void fixInsert(Node root){
         //colors
         if(root.parent == null){
             root.color = "B";
@@ -49,25 +54,36 @@ class RedBlackTree{
                 uncle.color = "B";
                 root.parent.parent.color = "R";
             }
-            if(root.parent.color == "R" && (uncle.color == "B" || uncle == null)){
+            if(root.parent.color == "R" && (uncle == null || uncle.color == "B")){
+                Node p = root.parent;
+                Node gp = root.parent.parent;
                 //4 cases
+
+
                 //LL Case
-                if(root.data<root.parent.data && root.parent.data<root.parent.parent.data){
-                   root = rightRotate(root.parent);
+                if(root == root.parent.left && root.parent == root.parent.parent.left){
                 }
 
             }
         }
     }
 
-    Node rightRotation(Node root){
-        Node child = root.left;
-        Node temp = child.right;
+    Node rightRotate(Node root){
+        Node leftChild = root.left;
+        Node temp = leftChild.right;
+        Node oldParent = root.parent;
 
-        child.right = root;
+        leftChild.right = root;
         root.left = temp;
 
-        return child;
+        if(temp!= null && temp.parent!=null){
+            temp.parent = root;
+        }
+        if(oldParent!=null)
+        leftChild.parent = oldParent;
+        root.parent = leftChild;
+
+        return leftChild;
     }
 
     Node leftRotation(Node root){
@@ -78,5 +94,34 @@ class RedBlackTree{
         root.right = temp;
 
         return root;
+    }
+
+
+    Node rightRotate(Node x){
+        Node y = x.left;
+        Node T2 = y.right;
+
+        Node oldParent = x.parent;
+
+        x.left = T2;
+
+        if (T2 != null) {
+            T2.parent = x;
+        }
+
+        y.parent = oldParent;
+
+        y.right = x;
+        x.parent = y;
+
+        if(oldParent == null){
+            root = y;
+        }
+        else if(x == oldParent.left){
+            oldParent.left = y;
+        }else{
+            oldParent.right = y;
+        }
+        return y;
     }
 }
