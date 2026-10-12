@@ -12,21 +12,27 @@ class Node{
 
 class RedBlackTree{
     Node root;
-    
-    Node temp;
+    Node inserted;
     void insert(int data){
+        inserted = null
         root = insertNode(root,temp,data);
+        if(inserted!=null){
+            fixInsert(inserted);
+        }
         root.color = "B";
     }
     Node insertNode(Node root, Node temp, int val){
         if(root == null){
-            root = new Node(val);root.parent = temp;
+            Node newNode = new Node(val);
+            root.parent = temp;
+            inserted = newNode;
+            return newNode;
         }else if(val<root.data){
-            temp = root;
-            root.left = insertNode(root.left,temp,val);
+            root.left = insertNode(root.left,root,val);
+        }else if {
+            root.right = insertNode(root.right,root,val);
         }else{
-            temp = root;
-            root.right = insertNode(root.right,temp,val);
+            return root;
         }
         fixInsert(root);
         return root;
@@ -62,66 +68,72 @@ class RedBlackTree{
 
                 //LL Case
                 if(root == root.parent.left && root.parent == root.parent.parent.left){
+                    root = rightRotate(root);
                 }
-
+                //RR Case
+                else if(root == root.parent.right && root.parent == root.parent.parent.right){
+                }
+                //RL Case
+                else if(root == root.parent.left && root.parent == root.parent.parent.right){
+                }
+                //LR Case
+                else if(root == root.parent.right && root.parent == root.parent.parent.left){
+                }
             }
         }
     }
 
-    Node rightRotate(Node root){
-        Node leftChild = root.left;
-        Node temp = leftChild.right;
-        Node oldParent = root.parent;
 
-        leftChild.right = root;
-        root.left = temp;
-
-        if(temp!= null && temp.parent!=null){
-            temp.parent = root;
-        }
-        if(oldParent!=null)
-        leftChild.parent = oldParent;
-        root.parent = leftChild;
-
-        return leftChild;
-    }
-
-    Node leftRotation(Node root){
-        Node rightChild = root.right;
-        Node temp = rightChild.left;
-
-        rightChild.left = root;
-        root.right = temp;
-
-        return root;
-    }
-
-
-    Node rightRotate(Node x){
+    void rightRotate(Node x) {
         Node y = x.left;
-        Node T2 = y.right;
-
+        Node t2 = y.right;
         Node oldParent = x.parent;
 
-        x.left = T2;
-
-        if (T2 != null) {
-            T2.parent = x;
+        // Move T2
+        x.left = t2;
+        if (t2 != null) {
+            t2.parent = x;
         }
 
+        // Move y above x
         y.parent = oldParent;
-
         y.right = x;
         x.parent = y;
 
-        if(oldParent == null){
+        // Connect y to the old parent or root
+        if (oldParent == null) {
             root = y;
-        }
-        else if(x == oldParent.left){
+        } else if (oldParent.left == x) {
             oldParent.left = y;
-        }else{
+        } else {
             oldParent.right = y;
         }
-        return y;
+    }
+
+
+    void leftRotate(Node x) {
+        Node y = x.right;
+        Node t2 = y.left;
+        Node oldParent = x.parent;
+
+        // Move T2
+        x.right = t2;
+        if (t2 != null) {
+            t2.parent = x;
+        }
+
+        // Move y above x
+        y.parent = oldParent;
+        y.left = x;
+        x.parent = y;
+
+        // Connect y to the old parent or root
+        if (oldParent == null) {
+            root = y;
+        } else if (oldParent.left == x) {
+            oldParent.left = y;
+        } else {
+            oldParent.right = y;
+        }
     }
 }
