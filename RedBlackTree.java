@@ -87,6 +87,44 @@ class RedBlackTree{
         root.color = "B";
     }
 
+
+    //Deletion
+    Node search(int n) {
+        Node temp = root;
+        while (temp != null) {
+            if (n < temp.val) {
+                if (temp.left == null)
+                    break;
+                else
+                    temp = temp.left;
+            } else if (n == temp.val) {
+                break;
+            } else {
+                if (temp.right == null)
+                    break;
+                else
+                    temp = temp.right;
+            }
+        }
+
+        return temp;
+    }
+    void delete(int val){
+        if(root == null){
+            return;
+        }
+        Node v = search(val);
+        if(v.data ! = val){
+            System.out.println("No node found to delete with value: " + n);
+            return;
+        }
+        deleteNode(v);
+    }
+
+    void deleteNode(Node root){
+        
+    }
+
     Node rightRotate(Node gp) {
         Node p = gp.left;
         Node y = p.right;
