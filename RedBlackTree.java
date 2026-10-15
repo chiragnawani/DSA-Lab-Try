@@ -122,7 +122,7 @@ class RedBlackTree{
     }
 
     void deleteNode(Node root){
-        
+        root = null;
     }
 
     Node rightRotate(Node gp) {
