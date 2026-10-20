@@ -11,6 +11,7 @@ class Node{
 
 class OnlyBinaryTree{
     Node root;
+    
     void insert(int val){
         Node newNode = new Node(val);
 
@@ -35,7 +36,6 @@ class OnlyBinaryTree{
             }else{
                 queue.add(current.right);
             }
-
         }
     }
 
