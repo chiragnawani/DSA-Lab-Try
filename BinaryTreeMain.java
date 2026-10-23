@@ -35,41 +35,53 @@ class BST{
         inorder(root.right);
     }
 
-    void delete(int val){
-        deleteNode(root, val);
+    void delete(int val) {
+        root = deleteNode(root, val);
     }
 
-    Node deleteNode(Node root, int key){
-        if(root == null){
-            return;
+    Node deleteNode(Node root, int key) {
+        if (root == null) {
+            return null;
         }
-        if(root.data<key){
-            root.data = deleteNode(root.left, key);
+
+        if (key < root.data) {
+            root.left = deleteNode(root.left, key);
         }
-        else if(root.data<key){
-            return deleteNode(root.right, key);
+        else if (key > root.data) {
+            root.right = deleteNode(root.right, key);
         }
-        else if(root.data == key){
-            if(root.right == null && root.left == null){
+        else {
+            // No child
+            if (root.left == null && root.right == null) {
                 return null;
             }
-            else if(root.right == null){
-                return root.left;
-            }
-            else if(root.left == null){
+
+            // Only right child
+            else if (root.left == null) {
                 return root.right;
             }
-            Node successor = findMin(root.right,data);
+
+            // Only left child
+            else if (root.right == null) {
+                return root.left;
+            }
+
+            // Two children
+            Node successor = findMin(root.right);
+
             root.data = successor.data;
-            root.right = deleteNode(root.left, successor.data);
+
+            root.right = deleteNode(root.right, successor.data);
         }
+
         return root;
     }
 
-    Node findMin(Node root, int data){
-        while(root.left !=null){
+    Node findMin(Node root) {
+        while (root.left != null) {
             root = root.left;
         }
+
         return root;
     }
 }
