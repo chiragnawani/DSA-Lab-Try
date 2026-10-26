@@ -24,8 +24,44 @@ class BTree{
         root = new Node(order,true);
     }
 
+    class Split{
+        int promotedKey;
+        Node right;
+        Split(int promotedKey, Node right){
+            this.promotedKey = promotedKey;
+            this.right = right;
+        }
+    }
+
     void insert(int key){
         if(search(key)) return;
-        Split result = 
+        Split result = insertRec(root,key);
+
+        if(result!=null){
+
+        }
+    }
+
+    Split insertRec(Node node, int key){
+        int i = node.n - 1;
+        if(node.leaf){
+            while(i>=0 && && key < node.keys[i]){
+                node.keys[i+1] = node.keys[i];
+                i--;
+            }
+            node.keys[i+1] = key;
+            node.n++;
+        }else{
+            while(i>=0 && key < node.keys[i]){
+                i--;
+            }
+            i++;
+
+            Split childSplit = insertRec(node.children[i], key);
+        }
+        if(node.n == order){
+            return splitNode(node);
+        }
+        return null;
     }
 }
