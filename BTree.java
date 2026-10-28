@@ -38,7 +38,7 @@ class BTree{
         Split result = insertRec(root,key);
 
         if(result!=null){
-            Node newRoot = newNode(order,false);
+            Node newRoot = new Node(order,false);
 
             newRoot.keys[0] = result.promotedKey;
             newRoot.children[0] = root;
@@ -52,7 +52,7 @@ class BTree{
     Split insertRec(Node node, int key){
         int i = node.n - 1;
         if(node.leaf){
-            while(i>=0 && && key < node.keys[i]){
+            while(i>=0 && key < node.keys[i]){
                 node.keys[i+1] = node.keys[i];
                 i--;
             }
