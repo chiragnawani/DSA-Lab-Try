@@ -5,7 +5,7 @@ class BTree{
         int n;
         boolean leaf;
 
-        Node(int order, boolean isLeaf){
+        Node(int order, boolean leaf){
             keys = new int[order];
             children = new Node[order + 1];
             n = 0;
@@ -103,5 +103,29 @@ class BTree{
         full.n = median;
 
         return new Split(promotedKey, right);
+    }
+
+    boolean search(int key){
+        return searchRec(int key, root);
+    }
+    boolean searchRec(int key, Node root){
+        if(node == return){
+            return false;
+        }
+        int i = 0;
+        while(i<node.n && node.keys[i]<key){
+            i++;
+        }
+        if(i<node.n && node.keys[i]==key){
+            return true;
+        }
+        if(node.leaf){
+            return false;
+        }
+        return searchRec(node.children[i],key);
+    }
+
+    void delete(int key){
+        
     }
 }
