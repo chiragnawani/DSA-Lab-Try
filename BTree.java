@@ -106,10 +106,10 @@ class BTree{
     }
 
     boolean search(int key){
-        return searchRec(int key, root);
+        return searchRec(key, root);
     }
-    boolean searchRec(int key, Node root){
-        if(node == return){
+    boolean searchRec(int key, Node node){
+        if(node == null){
             return false;
         }
         int i = 0;
@@ -126,6 +126,69 @@ class BTree{
     }
 
     void delete(int key){
-        
+        if(!search(key)) return;
+
+        deleteRec(root,key);
+    }
+
+    int minKeys(){
+        return (order+1)/2 - 1;
+    }
+    void deleteRec(Node node, int key){
+        int i = 0;
+        while(i<node.n && node.keys[i]<key){
+            i++;
+        }
+        if(i<node.n && node.keys[i] == key){
+            if(node.leaf){
+                for(int j=i; j<node.n-1;j++){
+                    node.keys[j] = node.keys[j+1];
+                }
+                node.n--;
+            }else{
+                int predecessor = getPredecessor(node.children[i]);
+                node.keys[i] = predecessor;
+                deleteRec(node.children[i], predecessor);
+            }
+        }
+    }
+
+    int getPredecessor(Node node){
+        while(!node.leaf){
+            node = node.children[node.n];
+        }
+        return node.keys[node.n-1];
+    }
+
+    void borrowFromNext(Node parent, int idx){
+        Node child = parent.children[idx];
+        Node sibling = parent.children[idx+1];
+
+        child.keys[child.n] = parent.keys[idx];
+
+        if(!child.leaf){
+            child.children[child.n + 1] = sibling.children[0];
+        }
+        parent.keys[idx] = sibling.keys[0];
+
+        for(int j=0; j<sibling.n-1; j++){
+            sibling.keys[j] = sibling.keys[j+1];
+        }
+        if(!sibling.leaf){
+            for(int j=0; j<sibling.n; j++){
+                sibling.children[j] = sibling.children[j+1];
+            }
+        }
+        child.n++;
+        sibling.n--;
+    }
+
+    void borrowFromPrev(Node parent, int idx){
+        Node child = parent.children[idx];
+        Node sibling = parent.children[idx-1];
+
+        for(int j=child.n-1; j>=0; j--){
+            node.keys[j+1] = node.keys[j];
+        }
     }
 }
