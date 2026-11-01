@@ -189,6 +189,8 @@ class BTree{
 
         for(int j=child.n-1; j>=0; j--){
             node.keys[j+1] = node.keys[j];
+
+            node =a ;
         }
     }
 }
