@@ -15,6 +15,7 @@ class AVLTree{
     void insert(int data){
         root = insertNode(root,data);
     }
+
     Node insertNode(Node root, int key){
         if(root == null){
             root = new Node(key);
@@ -52,6 +53,7 @@ class AVLTree{
     void delete(int data){
         root = deleteNode(root,data);
     }
+
     Node deleteNode(Node root, int key){
         if(root == null){
             return null;
@@ -72,6 +74,7 @@ class AVLTree{
                 root.right = deleteNode(root.left, successor.data);
             }
         }
+        
         root.height = 1 + Math.max(height(root.left), height(root.right));
         int bf = getBalance(root);
 
