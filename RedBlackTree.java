@@ -21,6 +21,7 @@ class RedBlackTree{
         }
         root.color = "B";
     }
+
     Node insertNode(Node root, Node temp, int val){
         if(root == null){
             Node newNode = new Node(val);
@@ -88,6 +89,7 @@ class RedBlackTree{
     }
 
 
+
     //Deletion
     Node search(int n) {
         Node temp = root;
@@ -109,6 +111,8 @@ class RedBlackTree{
 
         return temp;
     }
+
+    
     void delete(int val){
         if(root == null){
             return;
@@ -122,10 +126,6 @@ class RedBlackTree{
     }
 
     void deleteNode(Node root){
-<<<<<<< HEAD
-=======
-        Node temp = root;
->>>>>>> d78233ec832a7a0f8fb966c3bb46b4757a8afa40
     }
 
     Node rightRotate(Node gp) {
