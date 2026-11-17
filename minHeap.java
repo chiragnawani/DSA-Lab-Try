@@ -27,6 +27,7 @@ public class MinHeap {
             }
         }
     }
+    void heapify(int i){}
 
     public static void delete(int key){
         if(size == 0){
