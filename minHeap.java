@@ -27,8 +27,8 @@ public class MinHeap {
             }
         }
     }
-    void heapify(int i){}
-
+    void heapifyup(int i){}
+    void heapifydown(int i){}
     public static void delete(int key){
         if(size == 0){
             System.out.println("Heap is Empty");
